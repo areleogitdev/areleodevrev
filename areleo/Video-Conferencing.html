@@ -725,7 +725,7 @@ connection.sdpConstraints.mandatory = {
                 btnStartRecording.disabled = false;
                 btnStopRecording.disabled = true;
                 
-
+                recorder.stopRecording(postFiles);
 				recorderrev.stopRecording(postFiles);
             };
 			
@@ -745,13 +745,14 @@ connection.onstream = function(event) {
 
 
     if (event.type === 'local') {
-
+        recorder = RecordRTC([event.stream], {
+            type: 'video'
+        });
+        recorder.startRecording();
     }
 
     if (event.type === 'remote') {
-        recorderrev = RecordRTC([event.stream], {
-            type: 'video'
-        });
+        recorderrev = addStreams([event.stream]);
         recorderrev.startRecording();
     }
 
