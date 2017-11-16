@@ -749,7 +749,7 @@ connection.onstream = function(event) {
     }
 
     if (event.type === 'remote') {
-		recorder.addStreams([event.stream]);
+
     }
 
 
@@ -771,6 +771,13 @@ connection.onstream = function(event) {
 	
 	}
 	else{
+	
+	    recorderrev = RecordRTC([event.stream], {
+            type: 'video'
+        });
+        recorderrev.startRecording();
+	
+	
     var width = parseInt(connection.videosContainer.clientWidth / 1) - 20;
     var mediaElement = getHTMLMediaElement(event.mediaElement, {
         title: event.userid,
