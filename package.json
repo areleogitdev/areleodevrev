@@ -10,9 +10,12 @@
     "body-parser": "^1.17.2",
     "express": "^4.15.4",
     "express-session": "^1.15.5",
+    "formidable": "^1.1.1",
     "mongodb": "^2.2.31",
-    "wav": "^1.0.1",
-    "socket.io": "latest"
+    "recordrtc": "^5.4.5",
+	"formidable": "1.1.1",	
+    "socket.io": "latest",
+    "wav": "^1.0.1"
   },
   "devDependencies": {},
   "scripts": {
