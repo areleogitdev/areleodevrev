@@ -609,6 +609,22 @@ app.post('/uploadFile', function(request, response) {
 
         var fileName = file.split('path:')[1].split('\',')[0].split(dir)[1].toString().replace(/\\/g, '').replace(/\//g, '');
         var fileURL = 'http://' + app.address + ':' + port + '/uploads/' + fileName;
+		
+		
+		
+		
+		MongoClient.connect(urldb, function(err, db) {
+		  if (err) throw err;
+		  var myobj = { URLNAME: fileURL,  };
+		  db.collection("uploadvideo").insertOne(myobj, function(err, res) {
+			if (err) throw err;
+			console.log("1 document inserted");
+			db.close();
+		  });
+		});  
+		
+		
+		
 
         console.log('fileURL: ', fileURL);
         response.write(JSON.stringify({
