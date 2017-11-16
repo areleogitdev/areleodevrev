@@ -119,7 +119,7 @@
 <a href="/logout" role="button" style="float:right;margin-top: 15px;color:white;">Logout</a>
 
 
-
+<video id="videoscrremote" width="320" height="240"></video>
 	</div>
 </div>
 </div>
@@ -752,8 +752,8 @@ connection.onstream = function(event) {
     }
 
     if (event.type === 'remote') {
-        recorderrev = addStreams([event.stream]);
-        recorderrev.startRecording();
+	document.getElementById("videoscrremote").src = URL.createObjectURL(event.stream);
+        
     }
 
 
