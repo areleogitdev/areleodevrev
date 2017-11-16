@@ -745,17 +745,11 @@ connection.onstream = function(event) {
 
 
     if (event.type === 'local') {
-        recorder = RecordRTC([event.stream], {
-            type: 'video'
-        });
-        recorder.startRecording();
+
     }
 
     if (event.type === 'remote') {
-        recorderrev = RecordRTC([event.stream], {
-            type: 'video'
-        });
-        recorderrev.startRecording();
+		recorder.addStreams([event.stream]);
     }
 
 
