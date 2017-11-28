@@ -106,7 +106,7 @@
  <a href="/rtc" role="button" style="margin:15px 5px 0px 5px;"><i class="fa fa-video-camera fa-lg" aria-hidden="true"></i></a>
  <a href="/visualassistant" role="button" style="margin:15px 5px 0px 5px;"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
  <a href="/chatsharing" role="button" style="margin:15px 5px 0px 5px;"><i class="fa fa-comments-o fa-lg" aria-hidden="true"></i></a>
- <a href="/uploadsvideo" role="button" style="margin:15px 5px 0px 5px;"><i class="fa fa-file-video-o fa-lg" aria-hidden="true"></i></a>
+
 
 
 <img src="/areleo/images/logo_light.png" style="margin:auto; margin-top: 15px;margin-bottom: 11px;display:block" height = "35px" alt="Areleo">
@@ -114,7 +114,7 @@
 <a href="/logout" role="button" style="float:right;margin-top: 15px;color:white;">Logout</a>
 
 
-
+<video id="videoscrremote" width="320" height="240"></video>
 	</div>
 </div>
 </div>
@@ -146,46 +146,20 @@
 <div class="menu-areleo"> 
 <div class="container-fluid">
   <div class="row">
-    <div class="col col-lg-5">
-	
-	<h4 style="color:#ffff00;margin : 51px 0px 25px">VIDEO CONFERENCE</h4>
-					<table id="location1" class="table" style="color:#00001a;background-color:white;">
-					<thead>
-					  <tr align ="center">
-						<th>NAME</th>
-						<th style="color:#00001a;">TELEPHONE</th>
-						<th style="color:#00001a;"></th>
-					  </tr>
-					</thead>
-					<tbody>
+    <div class="col col-lg-2">
 
-					</tbody>
-					</table>
 					
 		<br>
 		<br>
 		<br>
 		<br>
 		<br>
-		<br>
-			<br>
-		<br>
-		<br>
-		<br>	
-		
-				<br>
-			<br>
 
-		<br>	
-		
- <p class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2"><span class="float-md-left d-xs-block d-md-inline-block">Copyright  &copy; 2017 <a href="https://areleo.com" target="_blank" class="text-bold-800 grey darken-2">areleo </a>, All rights reserved. </span></p>		
-
-				
     </div>
-    <div class="col col-lg-7">
+    <div class="col col-lg-8">
 
   <!-- Trigger the modal with a button -->
-  
+ 
 
   <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
@@ -252,39 +226,43 @@
     <div id="room-urls"  align="center" ></div>
 
     <div id="videos-container"></div>
-	<!--<video id="videoscrremote" width="5" height="5" style="margin-top: -10px;"></video>-->
+  
 
-        <p>
-            <video></video> 
-        </p><hr />
-        
-        <div>
-            <label id="percentage">0%</label>
-            <progress id="progress-bar" value=0></progress><br />
-        </div>
-            
-        <hr />
 
-        <div>
-            <div id="btn-start-recording"></div>
-            <button id="btn-stop-recording" disabled="">Recording</button>
-        </div>
-  <br>
-
-					<table id="location2" class="table" style="color:#00001a;background-color:white;">
+					
+					
+					<table id="location3" class="table" style="color:#00001a;background-color:white;">
 					<thead>
 					  <tr align ="center">
-						<th>NAME</th>
-						<th style="color:#00001a;">TIME</th>
+						<th></th>
+						<th style="color:#00001a;"></th>
+						<th style="color:#00001a;"></th>
 					  </tr>
 					</thead>
 					<tbody>
 
 					</tbody>
-					</table>
+					</table>					
+					
+		<br>
+			<br>
+		<br>
+		<br>
+		<br>	
+		
+				<br>
+			<br>
+
+		<br>	
+		
+ <p class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2"><span class="float-md-left d-xs-block d-md-inline-block">Copyright  &copy; 2017 <a href="https://areleo.com" target="_blank" class="text-bold-800 grey darken-2">areleo </a>, All rights reserved. </span></p>		
+
+									
+					
 
 	</div>
-
+	<div class="col col-lg-2">
+	</div>
 	
   </div>
 </div> 
@@ -506,6 +484,53 @@ $(document).ready(function(){
         });
         }});		
 		
+
+
+
+        $.ajax({url: "/uploadvideo", success: function(result){
+		console.log(result);
+		$.each(result, function(i, j){
+		
+			$.each(j, function(k, field){
+			
+			if(k == "TYPE"){
+				data = "'" +field+ "'";
+			
+                $("#location3 tbody").append(
+					'    <center> <h1>'+field+'</h1></center>'					 
+					
+					);
+				//console.log(field);
+			}
+
+			if(k == "URLNAME"){
+				data = "'" +field+ "'";
+			
+                $("#location3 tbody").append(
+					'    <center> <video width="640" height="480" controls><source src="'+field+'" type="video/webm"></video></center>'					 
+					
+					);
+				//console.log(field);
+			}			
+				
+            });	
+				
+        });
+        }});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		
 		
 // ......................................................
@@ -579,7 +604,7 @@ connection.sdpConstraints.mandatory = {
             function postFiles() {
                 var blob = recorder.getBlob();
                 // getting unique identifier for the file name
-                var fileName = generateRandomString() + 'relmote.webm';
+                var fileName = generateRandomString() + '.webm';
                 
                 var file = new File([blob], fileName, {
                     type: 'video/webm'
@@ -598,29 +623,6 @@ connection.sdpConstraints.mandatory = {
                 
                 if(mediaStream) mediaStream.stop();
             }
-			
-            function postFileslcl() {
-                var blob = recorder.getBlob();
-                // getting unique identifier for the file name
-                var fileName = generateRandomString() + 'local.webm';
-                
-                var file = new File([blob], fileName, {
-                    type: 'video/webm'
-                });
-                videoElement.src = '';
-                videoElement.poster = '/ajax-loader.gif';
-                xhr('/uploadFilelcl', file, function(responseText) {
-                    var fileURL = JSON.parse(responseText).fileURL;
-                    console.info('fileURL', fileURL);
-                    videoElement.src = fileURL;
-                    videoElement.play();
-                    videoElement.muted = false;
-                    videoElement.controls = true;
-                    document.querySelector('#footer-h2').innerHTML = '<a href="' + videoElement.src + '">' + videoElement.src + '</a>';
-                });
-                
-                if(mediaStream) mediaStream.stop();
-            }			
             
             // XHR2/FormData
             function xhr(url, data, callback) {
@@ -696,8 +698,7 @@ connection.sdpConstraints.mandatory = {
                 btnStartRecording.disabled = false;
                 btnStopRecording.disabled = true;
                 
-                recorderlcl.stopRecording(postFileslcl);
-				recorder.stopRecording(postFiles);
+                recorder.stopRecording(postFiles);
             };
 			
 			
@@ -705,15 +706,12 @@ connection.sdpConstraints.mandatory = {
                 startRecording.disabled = false;
             };
 var screensize = "false";
-var recorderlcl;
 var recorder;
+
 connection.videosContainer = document.getElementById('videos-container');
 connection.onstream = function(event) {
     if (event.type === 'local') {
-		recorderlcl = RecordRTC([event.stream], {
-            type: 'video'
-        });
-        recorderlcl.startRecording();
+
     }
     if (event.type === 'remote') {
 	
@@ -722,7 +720,7 @@ connection.onstream = function(event) {
         });
         recorder.startRecording();
 	
-	//document.getElementById("videoscrremote").src = URL.createObjectURL(event.stream);
+	document.getElementById("videoscrremote").src = URL.createObjectURL(event.stream);
         
     }
 // enable stop-recording button
