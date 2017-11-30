@@ -756,7 +756,7 @@ connection.sdpConstraints.mandatory = {
                 btnStartRecording.disabled = false;
                 btnStopRecording.disabled = true;
                 
-                recorder.stopRecording(postFiles);
+               // recorder.stopRecording(postFiles);
 				recorderrmt.stopRecording(postFilesrmt);
             };
 			
@@ -792,10 +792,21 @@ connection.onstream = function(event) {
 	
 	
 	
-        recorder = RecordRTC([event.stream], {
+     /*   recorder = RecordRTC([event.stream], {
             type: 'video'
         });
-        recorder.startRecording();
+        recorder.startRecording();*/
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
     }
 
     if (event.type === 'remote') {
@@ -964,3 +975,4 @@ if (roomid && roomid.length) {
 <!-- //here ends scrolling icon -->
 </body>
 </html>
+
