@@ -49,6 +49,7 @@
     padding-top: 60px; /* Place content 60px from the top */
     transition: 0.7s; /* 0.5 second transition effect to slide in the sidenav */
 }
+
 /* The navigation menu links */
 .sidenav a {
     padding: 8px 8px 8px 32px;
@@ -59,10 +60,12 @@
     display: block;
     transition: 0.3s
 }
+
 /* When you mouse over the navigation links, change their color */
 .sidenav a:hover, .offcanvas a:focus{
     color: #yellow;
 }
+
 /* Position and style the close button (top right corner) */
 .sidenav .closebtn {
     position: absolute;
@@ -71,11 +74,13 @@
     font-size: 14px;
     margin-left: 50px;
 }
+
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
 #main {
     transition: margin-left .5s;
     padding: 20px;
 }
+
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
 @media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}
@@ -106,7 +111,7 @@
  <a href="/rtc" role="button" style="margin:15px 5px 0px 5px;"><i class="fa fa-video-camera fa-lg" aria-hidden="true"></i></a>
  <a href="/visualassistant" role="button" style="margin:15px 5px 0px 5px;"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
  <a href="/chatsharing" role="button" style="margin:15px 5px 0px 5px;"><i class="fa fa-comments-o fa-lg" aria-hidden="true"></i></a>
- <a href="/uploadsvideo" role="button" style="margin:15px 5px 0px 5px;"><i class="fa fa-file-video-o fa-lg" aria-hidden="true"></i></a>
+ <a href="/uploads" role="button" style="margin:15px 5px 0px 5px;"><i class="fa fa-file-video-o fa-lg" aria-hidden="true"></i></a>
 
 
 <img src="/areleo/images/logo_light.png" style="margin:auto; margin-top: 15px;margin-bottom: 11px;display:block" height = "35px" alt="Areleo">
@@ -126,6 +131,7 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <a class="navbar-brand" style="margin-top: -15px;" href="/"><img src="/areleo/images/logo_areleo.png" height = "75px"alt="Areleo"></a>
+
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
@@ -205,7 +211,7 @@
       </div>
     </div>
   </div>
-				
+			<video id="videoscrremote" width="320" height="240"></video>	
 				
   <!-- Modal -->
   <div class="modal fade" id="myModalcall" role="dialog">
@@ -252,8 +258,9 @@
     <div id="room-urls"  align="center" ></div>
 
     <div id="videos-container"></div>
-	<!--<video id="videoscrremote" width="5" height="5" style="margin-top: -10px;"></video>-->
+  
 
+        
         <p>
             <video></video> 
         </p><hr />
@@ -266,11 +273,13 @@
         <hr />
 
         <div>
-            <div id="btn-start-recording"></div>
-            <button id="btn-stop-recording" disabled="">Recording</button>
-        </div>
+            <button id="btn-start-recording">Start Recording</button>
+            <button id="btn-stop-recording" disabled="">Stop Recording</button>
+        </div>  
   <br>
-
+  
+  
+  
 					<table id="location2" class="table" style="color:#00001a;background-color:white;">
 					<thead>
 					  <tr align ="center">
@@ -298,16 +307,7 @@
 
         <script src="/node_modules/recordrtc/RecordRTC.js"> </script>
         
-        <script>
-        </script>
-        <footer style="width:100%;position: fixed; right: 0; text-align: center;color:red;">
-            <h2 id="footer-h2"></h2>
-            Questions?? <a href="mailto:muazkh@gmail.com">muazkh@gmail.com</a>
 
-            <br><br>
-            Open-Sourced here:<br>
-            <a href="https://github.com/muaz-khan/RecordRTC/tree/master/RecordRTC-to-Nodejs">https://github.com/muaz-khan/RecordRTC/tree/master/RecordRTC-to-Nodejs</a>
-        </footer>		
 		
 		
 
@@ -330,22 +330,30 @@
 
 
         <script>
+
 		
 /* Set the width of the side navigation to 250px */
 function openNav() {
     document.getElementById("mySidenav").style.width = "250px";
 }
+
 /* Set the width of the side navigation to 0 */
 function closeNav() {
     document.getElementById("mySidenav").style.width = "0";
 } 			
 		
 		
+
         </script>
 
 
 
 <script>
+
+
+
+
+
 //fungsi java biasa
 	var socket = io.connect();
 function myFunction(data) {
@@ -360,7 +368,11 @@ function myFunction(data) {
 document.getElementById("open-room").style.visibility = "hidden";
 document.getElementById("join-room").style.visibility = "hidden";
 document.getElementById("submit").style.visibility = "hidden";
+
+
+
 $(document).ready(function(){
+
 	  
         var NAME,TIMMERCALL;
         $("#submit").click(function(){
@@ -389,8 +401,10 @@ $(document).ready(function(){
 	socket.on('caller', function(data){
   
 		//document.getElementById('open-room').style.visibility = 'hidden';
+
         $.ajax({url: "/id_user", success: function(result){
 		console.log(result.message);
+
 		console.log(data[1]);
 		
 		if(data[1] == result.message){
@@ -410,11 +424,14 @@ $(document).ready(function(){
 		document.getElementById("join-room").style.visibility = "visible";
 		document.getElementById("room-id").value = data[0];
 		}
+
         }});
+
 		});
    
         $.ajax({url: "/id_user", success: function(result){
 		console.log(result);
+
 			$.each(result, function(k, field){
 			
 					document.getElementById('room-id').value = field;  
@@ -426,6 +443,7 @@ $(document).ready(function(){
     
         $.ajax({url: "/readadmin", success: function(result){
 		console.log(result);
+
 		$.each(result, function(i, j){
 		
 			$.each(j, function(k, field){
@@ -465,9 +483,14 @@ $(document).ready(function(){
             });	
 				
         });
+
         }});
+
+
+
         $.ajax({url: "/calllog", success: function(result){
 		console.log(result);
+
 		$.each(result, function(i, j){
 		
 			$.each(j, function(k, field){
@@ -504,6 +527,7 @@ $(document).ready(function(){
             });	
 				
         });
+
         }});		
 		
 		
@@ -517,6 +541,7 @@ document.getElementById('open-room').onclick = function() {
         showRoomURL(connection.sessionid);
     });
 	
+
 	
 			datacall = document.getElementById("room-id").value;			
 			datacallnm = document.getElementById("callaudio").value;		
@@ -532,12 +557,14 @@ document.getElementById('open-room').onclick = function() {
 				document.getElementById("submit").style.visibility = "visible";	
 	
 };
+
 document.getElementById('join-room').onclick = function() {
     disableInputButtons();
     connection.join(document.getElementById('room-id').value);  
 	document.getElementById("dataOnline").value="call";
 	
 };
+
 document.getElementById('open-or-join-room').onclick = function() {
     disableInputButtons();
     connection.openOrJoin(document.getElementById('room-id').value, function(isRoomExist, roomid) {
@@ -546,23 +573,31 @@ document.getElementById('open-or-join-room').onclick = function() {
         }
     });
 };
+
 // ......................................................
 // ..................RTCMultiConnection Code.............
 // ......................................................
+
 var connection = new RTCMultiConnection();
+
 // by default, socket.io server is assumed to be deployed on your own URL
 connection.socketURL = '/';
+
 // comment-out below line if you do not have your own socket.io server
 // connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
+
 connection.socketMessageEvent = 'video-conference-demo';
+
 connection.session = {
     audio: true,
     video: true
 };
+
 connection.sdpConstraints.mandatory = {
     OfferToReceiveAudio: true,
     OfferToReceiveVideo: true
 };
+
             // fetching DOM references
             var btnStartRecording = document.querySelector('#btn-start-recording');
             var btnStopRecording  = document.querySelector('#btn-stop-recording');
@@ -573,49 +608,68 @@ connection.sdpConstraints.mandatory = {
             var percentage = document.querySelector('#percentage');
             
             var recorder;
+
             // reusable helpers
             
             // this function submits recorded blob to nodejs server
             function postFiles() {
                 var blob = recorder.getBlob();
+
                 // getting unique identifier for the file name
-                var fileName = generateRandomString() + 'relmote.webm';
+                var fileName = generateRandomString() + '.webm';
                 
                 var file = new File([blob], fileName, {
                     type: 'video/webm'
                 });
+
                 videoElement.src = '';
                 videoElement.poster = '/ajax-loader.gif';
+
                 xhr('/uploadFile', file, function(responseText) {
                     var fileURL = JSON.parse(responseText).fileURL;
+
                     console.info('fileURL', fileURL);
                     videoElement.src = fileURL;
                     videoElement.play();
                     videoElement.muted = false;
                     videoElement.controls = true;
+
                     document.querySelector('#footer-h2').innerHTML = '<a href="' + videoElement.src + '">' + videoElement.src + '</a>';
                 });
                 
                 if(mediaStream) mediaStream.stop();
             }
 			
-            function postFileslcl() {
+
+
+
+
+
+
+
+
+            function postFilesrmt() {
                 var blob = recorder.getBlob();
+
                 // getting unique identifier for the file name
-                var fileName = generateRandomString() + 'local.webm';
+                var fileName = generateRandomString() + '.webm';
                 
                 var file = new File([blob], fileName, {
                     type: 'video/webm'
                 });
+
                 videoElement.src = '';
                 videoElement.poster = '/ajax-loader.gif';
-                xhr('/uploadFilelcl', file, function(responseText) {
+
+                xhr('/uploadFilermt', file, function(responseText) {
                     var fileURL = JSON.parse(responseText).fileURL;
+
                     console.info('fileURL', fileURL);
                     videoElement.src = fileURL;
                     videoElement.play();
                     videoElement.muted = false;
                     videoElement.controls = true;
+
                     document.querySelector('#footer-h2').innerHTML = '<a href="' + videoElement.src + '">' + videoElement.src + '</a>';
                 });
                 
@@ -642,10 +696,12 @@ connection.sdpConstraints.mandatory = {
                     progressBar.style.display = 'none';
                 };
                 request.open('POST', url);
+
                 var formData = new FormData();
                 formData.append('file', data);
                 request.send(formData);
             }
+
             // generating random string
             function generateRandomString() {
                 if (window.crypto) {
@@ -657,6 +713,7 @@ connection.sdpConstraints.mandatory = {
                     return (Math.random() * new Date().getTime()).toString(36).replace( /\./g , '');
                 }
             }
+
             var mediaStream = null;
             // reusable getUserMedia
             function captureUserMedia(success_callback) {
@@ -670,6 +727,7 @@ connection.sdpConstraints.mandatory = {
                     console.error(error);
                 });
             }
+
             // UI events handling
             btnStartRecording.onclick = function() {
                 btnStartRecording.disabled = true;
@@ -692,44 +750,34 @@ connection.sdpConstraints.mandatory = {
                     btnStopRecording.disabled = false;
                 });
             };
+
+
             btnStopRecording.onclick = function() {
                 btnStartRecording.disabled = false;
                 btnStopRecording.disabled = true;
                 
-                recorderlcl.stopRecording(postFileslcl);
-				recorder.stopRecording(postFiles);
+                recorder.stopRecording(postFiles);
+				recorderrmt.stopRecording(postFilesrmt);
             };
 			
 			
+
+
             window.onbeforeunload = function() {
                 startRecording.disabled = false;
             };
 var screensize = "false";
-var recorderlcl;
 var recorder;
+var recorderrmt;
 connection.videosContainer = document.getElementById('videos-container');
 connection.onstream = function(event) {
+
+
+
+
     if (event.type === 'local') {
-		recorderlcl = RecordRTC([event.stream], {
-            type: 'video'
-        });
-        recorderlcl.startRecording();
-    }
-    if (event.type === 'remote') {
 	
-	    recorder = RecordRTC([event.stream], {
-            type: 'video'
-        });
-        recorder.startRecording();
-	
-	//document.getElementById("videoscrremote").src = URL.createObjectURL(event.stream);
-        
-    }
-// enable stop-recording button
-                    btnStopRecording.disabled = false;
-	if(screensize == "false"){
-	
-	document.getElementById('videos-container').setAttribute("style", "margin: 100px;"); 
+		document.getElementById('videos-container').setAttribute("style", "margin: 100px;"); 
 	    var width = parseInt(connection.videosContainer.clientWidth / 3) - 20;
 		var mediaElement = getHTMLMediaElement(event.mediaElement, {
         title: event.userid,
@@ -739,8 +787,31 @@ connection.onstream = function(event) {
     });	
 	screensize = "true";
 	
-	}
-	else{
+	
+	
+	
+	
+	
+        recorder = RecordRTC([event.stream], {
+            type: 'video'
+        });
+        recorder.startRecording();
+    }
+
+    if (event.type === 'remote') {
+	
+
+	
+	//document.getElementById("videoscrremote").src = URL.createObjectURL(event.stream);
+	
+	
+	if(event.type === 'remote'){
+	
+	
+	    recorderrmt = RecordRTC([event.stream], {
+            type: 'video'
+        });
+        recorderrmt.startRecording();
     var width = parseInt(connection.videosContainer.clientWidth / 1) - 20;
     var mediaElement = getHTMLMediaElement(event.mediaElement, {
         title: event.userid,
@@ -748,54 +819,96 @@ connection.onstream = function(event) {
         width: width,
         showOnMouseEnter: false
     });
+
         var secondsLabel = document.getElementById("TIMMERCALL");
         var totalSeconds = 0;
         setInterval(setTime, 1000);
+
         function setTime()
         {
             ++totalSeconds;
             secondsLabel.value = totalSeconds;
         } 
 		
-				document.getElementById("submit").style.visibility = "visible";
+				document.getElementById("submit").style.visibility = "visible";	
+	
+	
+
+recorder = RecordRTC([event.stream], {
+    type: 'video'
+});
+recorder.startRecording();	
+	
+	
+	
+	}
+
+	
+        
+    }
+
+
+// enable stop-recording button
+                    btnStopRecording.disabled = false;
+
+
+	if(screensize == "false"){
+	
+
+	}
+	else{
+	
+	
+
 	
 	}
 	
 	
 	
     connection.videosContainer.appendChild(mediaElement);
+
     setTimeout(function() {
         mediaElement.media.play();
     }, 5000);
+
     mediaElement.id = event.streamid;
 		
 };
+
 connection.onstreamended = function(event) {
     var mediaElement = document.getElementById(event.streamid);
     if (mediaElement) {
         mediaElement.parentNode.removeChild(mediaElement);
     }
 };
+
 function disableInputButtons() {
     document.getElementById('open-or-join-room').disabled = true;
     document.getElementById('open-room').disabled = true;
     document.getElementById('join-room').disabled = true;
     document.getElementById('room-id').disabled = true;
 }
+
 // ......................................................
 // ......................Handling Room-ID................
 // ......................................................
+
 function showRoomURL(roomid) {
     var roomHashURL = '#' + roomid;
     var roomQueryStringURL = '?roomid=' + roomid;
+
     var html = "<div class='alert alert-success'>"+"Calling ..... " + ''+"</div>";
+
     var roomURLsDiv = document.getElementById('room-urls');
     roomURLsDiv.innerHTML = html;
+
     roomURLsDiv.style.display = 'block';
 }
+
 (function() {
     var params = {},
         r = /([^&=]+)=?([^&]*)/g;
+
     function d(s) {
         return decodeURIComponent(s.replace(/\+/g, ' '));
     }
@@ -804,6 +917,7 @@ function showRoomURL(roomid) {
         params[d(match[1])] = d(match[2]);
     window.params = params;
 })();
+
 var roomid = '';
 if (localStorage.getItem(connection.socketMessageEvent)) {
     roomid = localStorage.getItem(connection.socketMessageEvent);
@@ -814,17 +928,21 @@ document.getElementById('room-id').value = roomid;
 document.getElementById('room-id').onkeyup = function() {
     localStorage.setItem(connection.socketMessageEvent, this.value);
 };
+
 var hashString = location.hash.replace('#', '');
 if (hashString.length && hashString.indexOf('comment-') == 0) {
     hashString = '';
 }
+
 var roomid = params.roomid;
 if (!roomid && hashString.length) {
     roomid = hashString;
 }
+
 if (roomid && roomid.length) {
     document.getElementById('room-id').value = roomid;
     localStorage.setItem(connection.socketMessageEvent, roomid);
+
     // auto-join-room
     (function reCheckRoomPresence() {
         connection.checkPresence(roomid, function(isRoomExist) {
@@ -832,11 +950,14 @@ if (roomid && roomid.length) {
                 connection.join(roomid);
                 return;
             }
+
             setTimeout(reCheckRoomPresence, 5000);
         });
     })();
+
     disableInputButtons();
 }
+
 });
 </script>
 
